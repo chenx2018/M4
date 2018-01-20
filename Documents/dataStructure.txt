@@ -1,0 +1,37 @@
+The data is located in data folder and can be loaded via:
+> load("data/M4.Rdata")
+
+This will load M4 object, which is the list of length 100,000. It is of a class "Mcomp" and has the same structure as M3:
+M4[[12345]] is the list with specific values for a time series N12345
+M4[[12345]]$x is the actual values for the in-sample
+M4[[12345]]$xx is the holdout (last h observations)
+M4[[12345]]$h is the forecasting horizon
+M4[[12345]]$n is the length of the series
+M4[[12345]]$st is the name of series. e.g. "Y12345"
+M4[[12345]]$sn is the serial number of series. e.g. "N12345"
+M4[[12345]]$period is the seasonality type of data ("YEARLY", "QUARTERLY" etc).
+M4[[12345]]$type is the type of data ("INDUSTRIAL", "MICRO" etc)
+
+The frequency of data can be accessed via frequency(M4[[12345]]$x)
+
+Have a look at the general structure by typing:
+> library(Mcomp)
+> M4
+
+All the methods for M3 work in case of M4 out of the box:
+> plot(M4[[12345]])
+
+smooth functions can be applied directly:
+> library(smooth)
+> es(M4[[12345]], silent=F)
+
+If you need a specific subset (e.g. quarterly data), you can use subset() function from Mcomp package:
+> M4Q <- subset(M4, "QUARTERLY")
+
+Types of data:
+1. YEARLY;
+2. QUARTERLY;
+3. MONTHLY;
+4. WEEKLY;
+5. DAILY;
+6. HOURLY
