@@ -26,6 +26,7 @@ All the methods for M3 work in case of M4 out of the box:
 
 smooth functions can be applied directly:
 > library(smooth)
+>
 > es(M4[[12345]], silent=F)
 
 If you need a specific subset (e.g. quarterly data), you can use subset() function from Mcomp package:
