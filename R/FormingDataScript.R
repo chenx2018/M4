@@ -1,3 +1,5 @@
+### This script allows forming M4 object of class Mcomp ###
+
 library(readr)
 
 M4 <- list();

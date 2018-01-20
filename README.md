@@ -5,15 +5,15 @@ The data is located in data folder and can be loaded via:
 > load("data/M4.Rdata")
 
 This will load M4 object, which is the list of length 100,000. It is of a class "Mcomp" and has the same structure as M3:
-M4[[12345]] is the list with specific values for a time series N12345
-M4[[12345]]$x is the actual values for the in-sample
-M4[[12345]]$xx is the holdout (last h observations)
-M4[[12345]]$h is the forecasting horizon
-M4[[12345]]$n is the length of the series
-M4[[12345]]$st is the name of series. e.g. "Y12345"
-M4[[12345]]$sn is the serial number of series. e.g. "N12345"
-M4[[12345]]$period is the seasonality type of data ("YEARLY", "QUARTERLY" etc).
-M4[[12345]]$type is the type of data ("INDUSTRIAL", "MICRO" etc)
+* M4[[12345]] is the list with specific values for a time series N12345
+* M4[[12345]]$x is the actual values for the in-sample
+* M4[[12345]]$xx is the holdout (last h observations)
+* M4[[12345]]$h is the forecasting horizon
+* M4[[12345]]$n is the length of the series
+* M4[[12345]]$st is the name of series. e.g. "Y12345"
+* M4[[12345]]$sn is the serial number of series. e.g. "N12345"
+* M4[[12345]]$period is the seasonality type of data ("YEARLY", "QUARTERLY" etc).
+* M4[[12345]]$type is the type of data ("INDUSTRIAL", "MICRO" etc)
 
 The frequency of data can be accessed via frequency(M4[[12345]]$x)
 
