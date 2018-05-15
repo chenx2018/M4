@@ -20,7 +20,7 @@ M4Subset <- subset(M4Full,"QUARTERLY");
 
 # The length of the dataset.
 nSeries <- length(M4Subset)
-h <- M4Subset[[i]]$h
+h <- M4Subset[[1]]$h
 
 # These values are needed for the prediction intervals
 nModels <- 4;
