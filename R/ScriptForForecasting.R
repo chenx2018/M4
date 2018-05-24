@@ -16,7 +16,7 @@ registerDoMC(detectCores())
 # registerDoParallel(detectCores())
 
 # Make a subset from M4
-M4Subset <- subset(M4Full,"QUARTERLY");
+M4Subset <- subset(M4Full,"MONTHLY");
 
 # The length of the dataset.
 nSeries <- length(M4Subset)
@@ -37,10 +37,10 @@ listOfForecasts <- foreach(i=1:nSeries) %dopar% {
     x <- M4Subset[[i]]$x
     
     #### This is model fitting ####
-    esModel <- es(x,h=h,intervals="p",level=0.5);
-    cesModel <- auto.ces(x,h=h,intervals="p",level=0.5);
-    ssarimaModel <- auto.ssarima(x,h=h,intervals="p",level=0.5);
-    gesModel <- auto.ges(x,h=h,intervals="p",level=0.5);
+    esModel <- es(x,h=h,intervals="p",level=0);
+    cesModel <- auto.ces(x,h=h,intervals="p",level=0);
+    ssarimaModel <- auto.ssarima(x,h=h,intervals="p",level=0);
+    gesModel <- auto.ges(x,h=h,intervals="p",level=0);
     
     # Calculate AIC weights
     icWeights <- c(AICc(esModel),AICc(cesModel),AICc(ssarimaModel),AICc(gesModel));
@@ -115,6 +115,6 @@ for(i in 1:nSeries){
     matrixUpper[i,] <- listOfForecasts[[i]][3,];
 }
 
-write.csv(matrixForecasts,file="Forecasts/M4QuarterlyForecasts.csv")
-write.csv(matrixLower,file="Forecasts/M4QuarterlyLower.csv")
-write.csv(matrixUpper,file="Forecasts/M4QuarterlyUpper.csv")
+write.csv(matrixForecasts,file="Forecasts/M4DailyForecasts.csv")
+write.csv(matrixLower,file="Forecasts/M4DailyLower.csv")
+write.csv(matrixUpper,file="Forecasts/M4DailyUpper.csv")
