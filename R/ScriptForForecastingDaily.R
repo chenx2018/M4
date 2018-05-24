@@ -16,7 +16,10 @@ registerDoMC(detectCores())
 # registerDoParallel(detectCores())
 
 # Make a subset from M4
-M4Subset <- subset(M4Full,"MONTHLY");
+M4Subset <- list(NA)
+for(i in 1:4227){
+    M4Subset[[i]] <- M4Full[[48000+23000+24000+359+i]]
+}
 
 # The length of the dataset.
 nSeries <- length(M4Subset)
