@@ -42,7 +42,7 @@ nSeries <- nSeriesEnd - nSeriesStart + 1
 
 # These values are needed for the prediction intervals
 nModels <- 4;
-bins <- 1000-1
+bins <- 100-1
 
 # This is needed for appropriate combination of prediction intervals
 ourQuantiles <- array(NA,c(nModels,bins,h),dimnames=list(paste0("Model",c(1:nModels)),
@@ -58,7 +58,7 @@ listOfForecasts <- foreach(i=nSeriesStart:nSeriesEnd) %dopar% {
     esModel <- es(x,h=h,intervals="p",level=0);
     cesModel <- auto.ces(x,h=h,intervals="p",level=0);
     ssarimaModel <- auto.ssarima(x,h=h,intervals="p",level=0);
-    gesModel <- auto.ges(x,h=h,intervals="p",level=0);
+    gesModel <- auto.ges(x,h=h,intervals="p",level=0,lagMax=1);
     
     # Calculate AIC weights
     icWeights <- c(AICc(esModel),AICc(cesModel),AICc(ssarimaModel),AICc(gesModel));
@@ -108,14 +108,15 @@ listOfForecasts <- foreach(i=nSeriesStart:nSeriesEnd) %dopar% {
     # The correct intervals - quantiles, for which the newP is the first time > than selected value
     intervalsCorrect <- matrix(NA,2,h,dimnames=list(c("Lower","Upper"),dimnames(ourQuantiles)[[3]]))
     for(j in 1:h){
-        intervalsCorrect[1,j] <- ourSequence[newProbabilities[,j]>=0.05,j][1]
-        intervalsCorrect[2,j] <- ourSequence[newProbabilities[,j]>=0.95,j][1]
+        intervalsCorrect[1,j] <- ourSequence[newProbabilities[,j]>=0.025,j][1]
+        intervalsCorrect[2,j] <- ourSequence[newProbabilities[,j]>=0.975,j][1]
     }
     
     forecasts <- (esModel$forecast * icWeights[1] + cesModel$forecast * icWeights[2] +
                       ssarimaModel$forecast * icWeights[3] + gesModel$forecast * icWeights[4]);
     matrixReturned <- rbind(c(forecasts),intervalsCorrect)
     rownames(matrixReturned)[1] <- "Forecast"
+
     return(matrixReturned)
 }
 
