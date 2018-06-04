@@ -52,13 +52,13 @@ minMaxQuantiles <- matrix(NA,2,h)
 ourSequence <- array(NA,c(bins,h))
 
 listOfForecasts <- foreach(i=nSeriesStart:nSeriesEnd) %dopar% {
-    x <- M4Subset[[i]]$x
+    x <- ts(M4Subset[[i]]$x,frequency=7)
     
     #### This is model fitting ####
     esModel <- es(x,h=h,intervals="p",level=0);
     cesModel <- auto.ces(x,h=h,intervals="p",level=0);
     ssarimaModel <- auto.ssarima(x,h=h,intervals="p",level=0);
-    gesModel <- auto.ges(x,h=h,intervals="p",level=0,lagMax=1);
+    gesModel <- auto.ges(x,h=h,intervals="p",level=0);
     
     # Calculate AIC weights
     icWeights <- c(AICc(esModel),AICc(cesModel),AICc(ssarimaModel),AICc(gesModel));
